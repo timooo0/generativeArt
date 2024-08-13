@@ -21,8 +21,8 @@
 title: Generative ART by Timo
 description: >- # this means to ignore newlines until "baseurl:"
   A website to store my generative art projects.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://timooo0.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/generativeArt" # the subpath of your site, e.g. /blog
 
 # Build settings
 theme: minima
