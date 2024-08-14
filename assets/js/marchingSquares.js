@@ -21,9 +21,12 @@ const lookupTable = {
 
 
 function setup() {
-    createCanvas(displayWidth, displayHeight);
-    let canvasX = displayWidth;
-    let canvasY = displayHeight;
+    let canvasDiv = document.getElementById('scriptDiv');
+    let canvasX = canvasDiv.offsetWidth;
+    let canvasY = window.innerHeight*0.8;
+    let sketchCanvas = createCanvas(canvasX,canvasY);
+    sketchCanvas.parent("scriptDiv");   
+    
     let map = []
     for (let i=0; i <= canvasX; i+=res){
         let arr = [];
@@ -33,11 +36,15 @@ function setup() {
         map.push(arr);
     }
     
-    for (let i=0; i < canvasX/res; i++){
-        for (let j=0; j < canvasY/res; j++){       
+    for (let i=0; i < canvasX/res-1; i++){
+        for (let j=0; j < canvasY/res-1; j++){       
             let number = map[i][j]*1 + map[i+1][j]*2 + map[i+1][j+1]*4 + map[i][j+1]*8;
             let line_data = lookupTable[number];
+            console.log(number);
+            console.log(line_data);
+            console.log("?");
             line_data.forEach(function(data){
+                console.log((i+data[0])*res,(j+data[1])*res,(i+data[2])*res,(j+data[3])*res)
                 line((i+data[0])*res,(j+data[1])*res,(i+data[2])*res,(j+data[3])*res);
             });
             // c = color(255*map[i][j], 0, 0);

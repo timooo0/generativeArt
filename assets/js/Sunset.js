@@ -1,17 +1,21 @@
 // Sunset
 // Inspired by: https://www.reddit.com/r/generative/comments/17wof22/some_calm_and_boring_backgrounds_for_a/
 
-let canvasX = window.innerWidth;
-let canvasY = window.innerHeight;
-let margin = 0;
-let squareSize = 5;
-let offset = -150;
-let numWaves = 24;
-let numRays = 150;
 
 
 function setup() {
-    createCanvas(canvasX, canvasY);
+    let canvasDiv = document.getElementById('scriptDiv');
+    let canvasX = canvasDiv.offsetWidth;
+    let canvasY = window.innerHeight*0.8;
+    let sketchCanvas = createCanvas(canvasX,canvasY);
+    sketchCanvas.parent("scriptDiv");
+    
+    let squareSize = 5;
+    let offset = -150;
+    let numWaves = 24;
+    let waveOffset = 1.2*canvasY/numWaves;
+    let waveWidth = 3.5/canvasX;
+    let numRays = 150;
     background('rgba(0,255,0,0.5)');
     noStroke();
 
@@ -81,17 +85,17 @@ function setup() {
         strokeWeight(squareSize);
         noFill();
         beginShape();
-        for (let i = 0; i < canvasY; i++){
-            vertex(canvasY/10*Math.sin(6*i/canvasX+sineShift)+offset+75*waveId+squareSize/2, i);
+        for (let i = 0; i < canvasX; i++){
+            vertex(i, canvasY/10*Math.sin(i*waveWidth+sineShift)+offset+waveOffset*waveId+squareSize/2);
 
         }
         endShape();
         noStroke();
 
         // Fill the waves
-        for (let i=0; i < canvasX; i = i + squareSize){
-            for (let j=0; j < canvasY; j = j + squareSize){
-                if (canvasY/10*Math.sin(6*j/canvasX+sineShift)+offset+75*waveId < i){
+        for (let i=0; i < canvasX; i += squareSize){
+            for (let j=0; j < canvasY; j += squareSize){
+                if (canvasY/10*Math.sin(i*waveWidth+sineShift)+offset+waveOffset*waveId < j){
                     Math.random() > 0.3 ? fill(c1) : fill(c2);
                     square(i,j,squareSize);
                 }

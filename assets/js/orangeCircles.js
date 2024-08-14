@@ -1,18 +1,20 @@
-let canvasX = window.innerWidth;
-let canvasY = window.innerHeight;
-let margin = 0;
-
-let diameter = 175;
-let nInnerCircles = 15;
-let nWidth = 6;
-let nHeight = 3;
-let nCircles = nWidth*nHeight;
-let offsetX = 0;
-let offsetY = 0;
-
 function setup() {
-    createCanvas(canvasX, canvasY);
+    let canvasDiv = document.getElementById('scriptDiv');
+    let canvasX = canvasDiv.offsetWidth;
+    let canvasY = window.innerHeight*0.8;
+    let sketchCanvas = createCanvas(canvasX,canvasY);
+    sketchCanvas.parent("scriptDiv");
+
+    let nInnerCircles = 15;
+    let nWidth = 4;
+    let nHeight = 5;
+    let diameter = canvasX/(nWidth+1);
+    let nCircles = nWidth*nHeight;
+    let offsetX = 0;
+    let offsetY = 0;
+    
     background('rgba(255,200,0,0.5)');
+
     for (let i = 0; i<nCircles; i++){
         offsetX = 0;
         offsetY = 0;
