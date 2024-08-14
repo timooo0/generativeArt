@@ -40,9 +40,6 @@ function setup() {
         for (let j=0; j < canvasY/res-1; j++){       
             let number = map[i][j]*1 + map[i+1][j]*2 + map[i+1][j+1]*4 + map[i][j+1]*8;
             let line_data = lookupTable[number];
-            console.log(number);
-            console.log(line_data);
-            console.log("?");
             line_data.forEach(function(data){
                 console.log((i+data[0])*res,(j+data[1])*res,(i+data[2])*res,(j+data[3])*res)
                 line((i+data[0])*res,(j+data[1])*res,(i+data[2])*res,(j+data[3])*res);
