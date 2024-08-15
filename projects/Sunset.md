@@ -3,4 +3,4 @@ layout: post
 title: 'Sunset'
 ---
 
-{% include image.html image="sunset.js" %}
+{% include image.html image="Sunset.js" %}
