@@ -15,7 +15,7 @@ function setup() {
     while ((currentPos[0] > 0 && currentPos[1] > 0 && currentPos[0] < canvasX && currentPos[1] < canvasY)) {
         prevClockWise = clockWise
     
-        if (Math.random() >= 0.5) {
+        if (Math.random() >= 0.2) {
             clockWise = true
         } else {
             clockWise = false
