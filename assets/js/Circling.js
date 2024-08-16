@@ -15,17 +15,13 @@ function setup() {
     while ((currentPos[0] > 0 && currentPos[1] > 0 && currentPos[0] < canvasX && currentPos[1] < canvasY)) {
         prevClockWise = clockWise
     
-        if (Math.random() >= 0.1) {
+        if (Math.random() >= 0.5) {
             clockWise = true
-            console.log("Clockwise")
         } else {
             clockWise = false
-            console.log("Counter clockwise")
         }
-        console.log("previous", prevClockWise)
 
         if (clockWise != prevClockWise){
-            console.log("?")
             if (Math.abs(currentAngle) >= Math.PI*1.5-EPSILON){
                 currentPos[1] -= 0.5*lineSize
                 console.log("> 1.5 Pi")
@@ -42,7 +38,6 @@ function setup() {
                 currentPos[0] += 0.5*lineSize
                 console.log("> 0 Pi")
             }
-            console.log(Math.abs(currentAngle))
             currentAngle += Math.PI
         }
         
@@ -58,7 +53,6 @@ function setup() {
             currentAngle = 2*Math.PI + currentAngle
         }
         currentAngle = currentAngle%(2*Math.PI)
-        console.log("Current angle", currentAngle)
         
     }
 

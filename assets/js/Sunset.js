@@ -95,7 +95,8 @@ function setup() {
         // Fill the waves
         for (let i=0; i < canvasX; i += squareSize){
             for (let j=0; j < canvasY; j += squareSize){
-                if (canvasY/10*Math.sin(i*waveWidth+sineShift)+offset+waveOffset*waveId < j){
+                let waveHeight =canvasY/10*Math.sin(i*waveWidth+sineShift)+offset+waveOffset*waveId
+                if (j<offset+waveOffset*waveId+canvasY/6 && j > waveHeight){
                     Math.random() > 0.3 ? fill(c1) : fill(c2);
                     square(i,j,squareSize);
                 }
