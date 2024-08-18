@@ -82,7 +82,7 @@ function setup() {
 
         // Draw the edge of the wave
         stroke(c2);
-        strokeWeight(squareSize);
+        strokeWeight(squareSize+2);
         noFill();
         beginShape();
         for (let i = 0; i < canvasX; i++){
