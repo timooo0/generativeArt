@@ -1,10 +1,10 @@
 # Build settings
-
-port: 4000
 markdown:  kramdown
 permalink: /:title
-plugins:   [jekyll-sitemap, jekyll-feed,  jekyll-seo-tag]
+# plugins:   [jekyll-sitemap, jekyll-feed,  jekyll-seo-tag]
 
+# url: "https://timooo0.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+# baseurl: "/generativeArt" # the subpath of your site, e.g. /blog
 # Customise atom feed settings (this is where Jekyll-Feed gets configuration information)
 
 title:		   "Generative ART by Timooo0"

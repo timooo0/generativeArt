@@ -1,0 +1,54 @@
+$accent-color: #422724;
+$accent: #c99065;
+$accent-light: #c99065;
+$selectionColor: lighten($accent, 30%);
+
+$textColor: #666;
+$headlineColor: #333;
+$bgcolor: #e5eaee;
+$documentBackgroundColor: #fff;
+
+$marginSize: 2em;
+
+@mixin fontStyle(){
+    font-size: xx-large;
+    font-family: Rajdhani;
+}
+
+@mixin flexCenter(){
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h4 {
+    font-family: Rajdhani;
+    font-size: larger;
+    font-weight: 500;
+    color: $textColor;
+}
+a {
+    text-decoration: none;
+    outline: 0;
+    display: inline-block;
+    color: $textColor;
+}
+
+.site-container{
+    width: 850px;
+    margin: auto;
+    margin-top: $marginSize;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-content{
+    @include fontStyle();
+    font-size: medium;
+}
+@media (max-width: 768px){
+    .site-container{
+        width: 95vw;
+    }
+}

@@ -12,10 +12,11 @@ function setup() {
     let lineSize = 100
     let clockWise = false
     let prevClockWise = false
+    let counter = 0 
     while ((currentPos[0] > 0 && currentPos[1] > 0 && currentPos[0] < canvasX && currentPos[1] < canvasY)) {
         prevClockWise = clockWise
     
-        if (Math.random() >= 0.2) {
+        if (Math.random() >= 0.2 || counter < 4) {
             clockWise = true
         } else {
             clockWise = false
@@ -53,7 +54,7 @@ function setup() {
             currentAngle = 2*Math.PI + currentAngle
         }
         currentAngle = currentAngle%(2*Math.PI)
-        
+        counter += 1
     }
 
 }

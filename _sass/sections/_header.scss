@@ -1,0 +1,12 @@
+header {
+    width: auto;
+    @include fontStyle();
+    .logo{
+        float: left;
+    }
+    nav{
+        @include fontStyle();
+        float: right;
+        color: blue;
+    }
+}

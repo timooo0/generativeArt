@@ -2,7 +2,7 @@
 # General Site Settings
 
 menu:
-- {name: 'Projects', url: ''}
+# - {name: 'Projects', url: ''}
 - {name: 'About',    url: 'about'}
 
 #-------------------------------
@@ -10,9 +10,10 @@ menu:
 
 projects:
 - {name: 'Sunset'     ,     url: 'Sunset'}
-- {name: 'OrangeCircles',   url: 'OrangeCircles'}
 - {name: 'Connections',     url: 'Connections'}
+- {name: 'OrangeCircles',   url: 'OrangeCircles'}
 - {name: 'Circling',        url: 'Circling'}
+- {name: 'SubDivide',       url: 'SubDivide'}
 - {name: 'MarchingSquares', url: 'MarchingSquares'}
 
 #-------------------------------

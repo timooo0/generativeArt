@@ -1,5 +1,5 @@
-let res = 10;
-let radius = 10;
+let res = 20;
+let radius = 30;
 const lookupTable = {
     0  : [[]],
     1  : [[0  , 0.5, 0.5, 0  ]],
@@ -41,12 +41,8 @@ function setup() {
             let number = map[i][j]*1 + map[i+1][j]*2 + map[i+1][j+1]*4 + map[i][j+1]*8;
             let line_data = lookupTable[number];
             line_data.forEach(function(data){
-                console.log((i+data[0])*res,(j+data[1])*res,(i+data[2])*res,(j+data[3])*res)
                 line((i+data[0])*res,(j+data[1])*res,(i+data[2])*res,(j+data[3])*res);
             });
-            // c = color(255*map[i][j], 0, 0);
-            // fill(c);
-            // ellipse(i*res, j*res, radius, radius);
         }
     }
 }
