@@ -1,6 +1,5 @@
 let res = 10;
-let noiseGradient = 0.002;
-let heightDelta = 0.04;
+let heightDelta = 0.06;
 
 const lookupTable = {
     0  : [[],[[0,0],[0,res],[res,res],[res,0]]], //
@@ -30,19 +29,21 @@ function setup() {
     canvasY = Math.floor(canvasY/res)*res;
     let sketchCanvas = createCanvas(canvasX,canvasY);
     sketchCanvas.parent("scriptDiv");
+    let noiseGradient = 4.5e-3;
     
     let heightMap = []
     for (let i=0; i <= canvasX; i+=res){
         let arr = [];
         for (let j=0; j <= canvasY; j+=res){
-            arr.push(noise(i*noiseGradient,j*noiseGradient,0));
+            noiseDetail(5,0.5);
+            arr.push(noise(i*noiseGradient,j*noiseGradient));
         }
         heightMap.push(arr);
     }
     background(0,0,0);
     
     for(let height=heightDelta;height < 1;height+=heightDelta){
-
+        console.log(heightMap[0][0]);
         let localHeightMap = heightMap.map((arr)=> arr.map((x)=> x > height ? 0 : 1));
         for (let i=0; i <= canvasX/res-1; i++){
             for (let j=0; j <= canvasY/res-1; j++){       
