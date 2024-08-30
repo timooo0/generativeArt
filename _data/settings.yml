@@ -15,6 +15,7 @@ projects:
 - {name: 'Circling',        url: 'Circling'}
 - {name: 'SubDivide',       url: 'SubDivide'}
 - {name: 'MarchingSquares', url: 'MarchingSquares'}
+- {name: 'Rain',            url: 'Rain'}
 
 #-------------------------------
 # Contact Section
