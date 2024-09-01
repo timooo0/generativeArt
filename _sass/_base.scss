@@ -1,5 +1,5 @@
 $accent-color: #422724;
-$accent: #c99065;
+$accent: #d16732;
 $accent-light: #c99065;
 $selectionColor: lighten($accent, 30%);
 
@@ -28,6 +28,16 @@ h4 {
     font-weight: 500;
     color: $textColor;
 }
+
+h6 {
+    font-family: Rajdhani;
+    font-size: small;
+    font-weight: 500;
+    color: $textColor;
+    margin-top: 1em;
+    margin-left: 1em;
+}
+
 a {
     text-decoration: none;
     outline: 0;

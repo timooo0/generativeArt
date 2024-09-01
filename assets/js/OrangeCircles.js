@@ -7,8 +7,8 @@ function setup() {
 
   let nInnerCircles = 15;
   let nWidth = 4;
-  let nHeight = 5;
-  let diameter = canvasX / (nWidth + 1);
+  let nHeight = 4;
+  let diameter = Math.min(canvasX, canvasY) / (nWidth + 1);
   let nCircles = nWidth * nHeight;
   let offsetX = 0;
   let offsetY = 0;

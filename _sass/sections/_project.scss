@@ -44,6 +44,16 @@
     border-color: $textColor;
 }
 
+.project-inspiration{
+    a {
+        &:link{
+            text-decoration: underline;
+    	}
+        &:hover {
+            color: $accent;
+        }
+    }
+}
 @media (max-width: 768px){
     .project-container{
         max-width: 80vw;
