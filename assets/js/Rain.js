@@ -8,6 +8,12 @@ let rainColor1;
 let rainColor2;
 let rainWidth = 3;
 let blockers = []; // Start X, radius, Y offset, walking speed, walking height
+let windowFrame = {
+  "xMin": 0,
+  "xMax": 0,
+  "yMin": 0,
+  "yMax": 0,
+};
 
 function setup() {
   let canvasDiv = document.getElementById("scriptDiv");
@@ -17,48 +23,57 @@ function setup() {
   sketchCanvas.parent("scriptDiv");
 
   frameRate(60);
-  rainColor1 = color("rgba(150,0,250,0.3)");
+  rainColor1 = color("rgba(150,0,250,0.25)");
   rainColor2 = color("rgba(150,100,250,0.1)");
   background(20);
+  windowFrame = {
+    "xMin": 0.1*canvasX,
+    "xMax": 0.9*canvasX,
+    "yMin": 0,
+    "yMax": 0.8*canvasY,
+  };
   for (let i = 0; i < canvasX * rainDensity; i++) {
     for (let j = 0; j < canvasY * rainDensity; j++) {
-      rain.push([
-        Math.random() * canvasX, // x position
-        Math.random() * canvasY, // y position
-        rainBaseLength * (Math.random() - 0.5) * 1.5, // length
-      ]); 
+      rain.push({
+        "x": windowFrame.xMin+Math.random() * (windowFrame.xMax-windowFrame.xMin),
+        "y": Math.random() * windowFrame.yMax,
+        "length": rainBaseLength * (Math.random() - 0.5) * 1.5
+    }); 
     }
   }
+
+
 }
 
 function drawRain() {
+  strokeWeight(rainWidth);
   for (let i = 0; i < rain.length; i++) {
     stroke(rainColor1);
     for (const blocker of blockers) {
-      if (rain[i][0] > blocker[0] && rain[i][0] < blocker[0] + 2 * blocker[1]) {
+      if (rain[i].x > blocker.x && rain[i].x < blocker.x + 2 * blocker.radius) {
         if (
-          rain[i][1] + rain[i][2] >
+          rain[i].y + rain[i].length >
           -0.5 *
             Math.sqrt(
-              blocker[1] ** 2 - (rain[i][0] - blocker[0] - blocker[1]) ** 2
+              blocker.radius ** 2 - (rain[i].x - blocker.x - blocker.radius) ** 2
             ) +
-            blocker[2]
+            blocker.y
         ) {
           stroke(rainColor2);
         }
       }
     }
 
-    line(rain[i][0], rain[i][1], rain[i][0], rain[i][1] + rain[i][2]);
+    line(rain[i].x, rain[i].y, rain[i].x, rain[i].y + rain[i].length);
   }
 }
 
 function updateRain() {
   for (let i = 0; i < rain.length; i++) {
-    rain[i][1] += rain[i][2] * 0.1 + fallDistance;
-    if (rain[i][1] > canvasY) {
-      rain[i][1] = 0;
-      rain[i][0] = Math.random() * canvasX;
+    rain[i].y += rain[i].length * 0.1 + fallDistance;
+    if (rain[i].y > windowFrame.yMax) {
+      rain[i].x = windowFrame.xMin+Math.random() * (windowFrame.xMax-windowFrame.xMin);
+      rain[i].y = 0;
     }
   }
 }
@@ -68,32 +83,38 @@ function updateObjects() {
     let radius = Math.random() * 50 + 75;
     let speed = 1 + Math.random() * 2;
     if (Math.random() < 100000 / (60 * 3)) {
-      blockers.push([-2 * radius, radius, 0, speed, canvasY - 3 * radius]);
+      blockers.push({
+        "x": -2 * radius, 
+        "radius": radius,
+        "y": 0,
+        "speed": speed,
+        "walkHeight": canvasY - 3 * radius
+      });
 
       //small
       if (Math.random() < 0.3) {
         let smallRadius = Math.random() * 20 + 50;
-        blockers.push([
-          -4 * smallRadius - 2 * radius,
-          smallRadius,
-          0,
-          speed,
-          canvasY - 3 * smallRadius,
-        ]);
+        blockers.push({
+          "x": -4 * smallRadius - 2 * radius,
+          "radius": smallRadius,
+          "y": 0,
+          "speed": speed,
+          "walkHeight": canvasY - 3 * smallRadius,
+        });
       }
     }
   }
 
   // Update the location
   for (const blocker of blockers) {
-    blocker[0] += blocker[3];
-    blocker[2] =
-      0.5 *
-        blocker[1] * (Math.abs(Math.cos((blocker[0] * Math.PI) / (canvasX / ((10 * 75) / blocker[1])))) - 1) + blocker[4];
+  blocker.x += blocker.speed;
+  blocker.y =
+    0.5 *
+    blocker.radius * (Math.abs(Math.cos((blocker.x * Math.PI) / (canvasX / ((10 * 75) / blocker.radius)))) - 1) + blocker.walkHeight;
   }
 
   // Remove any that are out of frame
-  blockers = blockers.filter((blocker) => blocker[0] < canvasX);
+  blockers = blockers.filter((blocker) => blocker.x < canvasX);
 }
 
 function drawPerson() {
@@ -103,10 +124,10 @@ function drawPerson() {
     fill(c);
     // Umbrella top
     arc(
-      blocker[0] + blocker[1],
-      blocker[2],
-      2 * blocker[1],
-      0.5 * 2 * blocker[1],
+      blocker.x + blocker.radius,
+      blocker.y,
+      2 * blocker.radius,
+      0.5 * 2 * blocker.radius,
       PI,
       0
     );
@@ -114,26 +135,26 @@ function drawPerson() {
     stroke(c);
     // Connection rod
     line(
-      blocker[0] + blocker[1],
-      blocker[2],
-      blocker[0] + blocker[1],
-      blocker[2] + blocker[1]
+      blocker.x + blocker.radius,
+      blocker.y,
+      blocker.x + blocker.radius,
+      blocker.y + blocker.radius
     );
 
     noFill();
     strokeWeight(rainWidth * 2);
     // Handle
     line(
-      blocker[0] + blocker[1],
-      blocker[2] + 0.8 * blocker[1],
-      blocker[0] + blocker[1],
-      blocker[2] + blocker[1]
+      blocker.x + blocker.radius,
+      blocker.y + 0.8 * blocker.radius,
+      blocker.x + blocker.radius,
+      blocker.y + blocker.radius
     );
     arc(
-      blocker[0] + blocker[1] + 0.1 * blocker[1],
-      blocker[2] + blocker[1],
-      0.2 * blocker[1],
-      0.2 * blocker[1],
+      blocker.x + blocker.radius + 0.1 * blocker.radius,
+      blocker.y + blocker.radius,
+      0.2 * blocker.radius,
+      0.2 * blocker.radius,
       0,
       PI
     );
@@ -142,40 +163,96 @@ function drawPerson() {
     noStroke();
     fill(c);
     ellipse(
-      blocker[0] + 0.75 * blocker[1],
-      blocker[2] + 0.25 * blocker[1],
-      0.25 * blocker[1],
-      0.9 * blocker[1]
+      blocker.x + 0.75 * blocker.radius,
+      blocker.y + 0.25 * blocker.radius,
+      0.25 * blocker.radius,
+      0.9 * blocker.radius
     );
 
     ellipse(
-      blocker[0] + 0.9 * blocker[1],
-      blocker[2] + 1.3 * blocker[1],
-      1.25 * blocker[1],
-      1.5 * blocker[1]
+      blocker.x + 0.9 * blocker.radius,
+      blocker.y + 1.3 * blocker.radius,
+      1.25 * blocker.radius,
+      1.5 * blocker.radius
     );
 
     ellipse(
-      blocker[0] + 1.3 * blocker[1],
-      blocker[2] + 1.15 * blocker[1],
-      0.8 * blocker[1],
-      0.5 * blocker[1]
+      blocker.x + 1.3 * blocker.radius,
+      blocker.y + 1.15 * blocker.radius,
+      0.8 * blocker.radius,
+      0.5 * blocker.radius
     );
     ellipse(
-      blocker[0] + blocker[1],
-      blocker[2] + 2 * blocker[1],
-      2 * blocker[1],
-      2 * blocker[1]
+      blocker.x + blocker.radius,
+      blocker.y + 2 * blocker.radius,
+      2 * blocker.radius,
+      2 * blocker.radius
     );
   }
 }
 
+function drawWindow(){
+  //walls
+  fill("rgba(10,0,40,1)");
+  rect(0,0,windowFrame.xMin,canvasY);
+  rect(0,windowFrame.yMax,canvasY,canvasY-windowFrame.yMax);
+  rect(windowFrame.xMax,0,windowFrame.xMin,canvasY);
+
+  let width = 8*rainWidth
+  noStroke();
+  fill("rgba(10,0,20,1)");
+  // Frame
+  // left
+  rect(windowFrame.xMin, windowFrame.yMin, width, windowFrame.yMax+width);
+  // right
+  rect(windowFrame.xMax, windowFrame.yMin, width, windowFrame.yMax+width);
+  // bottom
+  rect(windowFrame.xMin, windowFrame.yMax, windowFrame.xMax-windowFrame.xMin+width, width);
+  
+  // Panels
+  // center line
+  width = 2*rainWidth;
+  let nPanels = 3;
+  for (let i=1;i<nPanels;++i){
+    rect(windowFrame.xMin+windowFrame.xMax/nPanels*i-4*width, windowFrame.yMin, width, windowFrame.yMax);
+  }
+  // horizontal lines
+  nPanels = 3;
+  for (let i=2;i<nPanels;++i){
+    rect(windowFrame.xMin, windowFrame.yMax - windowFrame.yMax/(nPanels)*(i), windowFrame.xMax-windowFrame.xMin+width, width);
+  }
+}
+
+function drawLights(){
+  drawLamp(canvasX*0.2,windowFrame.yMax*0.1, 0)
+  drawLamp(canvasX*0.8,windowFrame.yMax*0.1, 10000);
+}
+
+function drawLamp(x,y, flickerOffset){
+  noStroke();
+  fill("rgba(255,200,60,"+(0.8+0.05*noise(0.01*frameCount+flickerOffset))+")");
+  let width = 50;
+  let height = 100;
+  rect(x-0.25*width, y, width, height);
+  for (let i=1;i<10;++i){
+    fill("rgba(255,200,60,"+(0.02+0.05*noise(0.01*frameCount+flickerOffset))+")");
+    circle(x+0.25*width,y+width, 3*width+5*i**2);
+  }
+  stroke(0);
+  line(x-0.25*width, y+0.3*height, x+0.75*width, y+0.3*height);
+  line(x-0.25*width, y+0.2*height, x+0.75*width, y+0.2*height);
+  line(x-0.25*width, y+0.1*height, x+0.75*width, y+0.1*height);
+  line(x-0.25*width, y, x+0.75*width, y);
+  line(x+0.25*width,y,x+0.25*width,0);
+}
 function draw() {
   clear();
   background("rgba(0,0,40,1)");
-  strokeWeight(rainWidth);
+  
   drawRain();
   drawPerson();
+  drawWindow();
+  drawLights();
   updateRain();
   updateObjects();
 }
