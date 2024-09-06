@@ -231,12 +231,12 @@ function drawLights(){
 function drawLamp(x,y, flickerOffset){
   noStroke();
   fill("rgba(255,200,60,"+(0.8+0.05*noise(0.01*frameCount+flickerOffset))+")");
-  let width = 50;
-  let height = 100;
+  let width = 0.05*canvasX;
+  let height = 0.15*canvasY;
   rect(x-0.25*width, y, width, height);
   for (let i=1;i<10;++i){
     fill("rgba(255,200,60,"+(0.02+0.05*noise(0.01*frameCount+flickerOffset))+")");
-    circle(x+0.25*width,y+width, 3*width+5*i**2);
+    circle(x+0.25*width,y+0.5*height, 1.3*height+0.025*height*i**2);
   }
   stroke(0);
   line(x-0.25*width, y+0.3*height, x+0.75*width, y+0.3*height);
