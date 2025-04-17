@@ -1,19 +1,26 @@
 let EPSILON = 0.001;
+let canvasX;
+let canvasY;
+let currentPos;
+let currentAngle = 0;
+let lineSize = 100;
+let clockWise = false;
+let prevClockWise = false;
+let counter = 0;
 
 function setup() {
   let canvasDiv = document.getElementById("scriptDiv");
-  let canvasX = canvasDiv.offsetWidth;
-  let canvasY = window.innerHeight * 0.8;
+  canvasX = canvasDiv.offsetWidth;
+  canvasY = window.innerHeight * 0.8;
   let sketchCanvas = createCanvas(canvasX, canvasY);
   sketchCanvas.parent("scriptDiv");
 
-  let currentPos = [0.5 * canvasX, 0.5 * canvasY];
-  let currentAngle = 0;
-  let lineSize = 100;
-  let clockWise = false;
-  let prevClockWise = false;
-  let counter = 0;
-  while (
+  currentPos = [0.5 * canvasX, 0.5 * canvasY];
+  frameRate(60);
+}
+
+function draw(){
+  if (
     currentPos[0] > 0 &&
     currentPos[1] > 0 &&
     currentPos[0] < canvasX &&
@@ -21,58 +28,53 @@ function setup() {
   ) {
     prevClockWise = clockWise;
 
-    if (Math.random() >= 0.2 || counter < 4) {
-      clockWise = true;
-    } else {
-      clockWise = false;
-    }
-
-    if (clockWise != prevClockWise) {
-      if (Math.abs(currentAngle) >= Math.PI * 1.5 - EPSILON) {
-        currentPos[1] -= 0.5 * lineSize;
-        console.log("> 1.5 Pi");
-      } else if (Math.abs(currentAngle) >= Math.PI - EPSILON) {
-        currentPos[0] -= 0.5 * lineSize;
-        console.log("> 1 Pi");
-      } else if (Math.abs(currentAngle) >= Math.PI * 0.5 - EPSILON) {
-        currentPos[1] += 0.5 * lineSize;
-        console.log("> 0.5 Pi");
+    if (counter > 3){
+      if (Math.random() >= 0.5) {
+        clockWise = true;
       } else {
-        currentPos[0] += 0.5 * lineSize;
-        console.log("> 0 Pi");
+        clockWise = false;
       }
+      counter = 0;
+    }
+    
+    let deltaAngle = 0.1*Math.PI;
+    if (clockWise != prevClockWise) {
+      currentPos[0] += Math.cos(currentAngle) * 0.5 * lineSize;
+      currentPos[1] += Math.sin(currentAngle) * 0.5 * lineSize;
       currentAngle += Math.PI;
     }
 
     if (clockWise) {
-      drawQuarter(
+      drawArc(
         currentPos[0],
         currentPos[1],
         lineSize,
         currentAngle,
-        currentAngle + Math.PI * 0.5
+        currentAngle + deltaAngle
       );
-      currentAngle += Math.PI * 0.5;
+      currentAngle += deltaAngle;
     } else {
-      drawQuarter(
+      drawArc(
         currentPos[0],
         currentPos[1],
         lineSize,
-        currentAngle - Math.PI * 0.5,
+        currentAngle - deltaAngle,
         currentAngle
       );
-      currentAngle -= Math.PI * 0.5;
+      currentAngle -= deltaAngle;
     }
-
-    if (currentAngle < 0) {
-      currentAngle = 2 * Math.PI + currentAngle;
-    }
-    currentAngle = currentAngle % (2 * Math.PI);
     counter += 1;
+  } else {
+    currentPos = [0.5 * canvasX, 0.5 * canvasY];
+    currentAngle = Math.random() * (Math.PI * 2);
+    lineSize = 100;
+    clockWise = false;
+    prevClockWise = false;
+    counter = 0;
   }
 }
 
-function drawQuarter(posX, posY, lineSize, start, stop) {
+function drawArc(posX, posY, lineSize, start, stop) {
   for (let i = lineSize; i > 0; i -= 20) {
     strokeWeight(5);
     arc(posX, posY, i, i, start, stop);
