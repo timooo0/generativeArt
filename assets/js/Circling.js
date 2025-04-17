@@ -20,6 +20,7 @@ function setup() {
 }
 
 function draw(){
+  console.log(frameRate());
   if (
     currentPos[0] > 0 &&
     currentPos[1] > 0 &&
@@ -28,7 +29,7 @@ function draw(){
   ) {
     prevClockWise = clockWise;
 
-    if (counter > 3){
+    if (counter > 7){
       if (Math.random() >= 0.5) {
         clockWise = true;
       } else {
@@ -37,7 +38,7 @@ function draw(){
       counter = 0;
     }
     
-    let deltaAngle = 0.1*Math.PI;
+    let deltaAngle = 0.05*Math.PI;
     if (clockWise != prevClockWise) {
       currentPos[0] += Math.cos(currentAngle) * 0.5 * lineSize;
       currentPos[1] += Math.sin(currentAngle) * 0.5 * lineSize;
