@@ -6,6 +6,7 @@ layout: default
   <div class="post-container">
     <h4 class="project-title">{{ page.title }}</h4>
     <div class="project-load">{{ content }}</div>
+    {% if page.modes %}
     <div class="dropdown">
       <span id="mode-name">fractal tree</span>
       <div class="dropdown-content">
@@ -14,6 +15,7 @@ layout: default
         {% endfor %}
       </div>
     </div>
+    {% endif %}
     {% for slider-name in page.slider %}
     <div class="slider-container">
       <input type="range" min="1" max="100" value="50" step="any" class="slider" id="slider-{{ slider-name}}">
