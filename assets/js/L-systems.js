@@ -201,10 +201,14 @@ function setSlider(element_id, slider, precision=0){
   if (precision == 0){
     iteration_text.textContent = Number(slider.value);
   } else {
-    iteration_text.textContent = Number(slider.value).toPrecision(3);
+    iteration_text.textContent = Number(slider.value).toPrecision(precision);
   }
   slider.addEventListener("input", (event) => {
+    if (precision == 0){
     iteration_text.textContent = Number(event.target.value);
+    } else {
+      iteration_text.textContent = Number(event.target.value).toPrecision(precision);
+    }
     createDrawing();
   });
 }
@@ -234,7 +238,7 @@ function setup() {
   iteration_slider.max = 20;
   iteration_slider.step = 1;
   line_length_slider.min = 0;
-  line_length_slider.max = 50;
+  line_length_slider.max = 20;
   line_length_slider.step = 0.1;
   background("rgba(255,200,0,0.5)");
   stroke("rgba(26, 23, 14, 1)");

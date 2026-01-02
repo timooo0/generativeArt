@@ -138,4 +138,12 @@
         height: 40vw;
     }
 
+        // make dropdown wider on small screens
+    .dropdown {
+        width: 40%;
+    }
+    .dropdown-content {
+        width: 40%;
+    }
+
 }
