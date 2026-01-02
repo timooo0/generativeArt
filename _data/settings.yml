@@ -16,6 +16,7 @@ projects:
 - {name: 'SubDivide',       url: 'SubDivide'}
 - {name: 'MarchingSquares', url: 'MarchingSquares'}
 - {name: 'Rain',            url: 'Rain'}
+- {name: 'L-systems',       url: 'L-systems'}
 
 #-------------------------------
 # Contact Section

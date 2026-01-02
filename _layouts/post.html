@@ -6,7 +6,83 @@ layout: default
   <div class="post-container">
     <h4 class="project-title">{{ page.title }}</h4>
     <div class="project-load">{{ content }}</div>
-      <h6 class="project-inspiration">Inspired by: <a class="project-inspiration" href={{ page.inspiration }}>link</a></h6>
+    <div class="dropdown">
+      <span id="mode-name">fractal tree</span>
+      <div class="dropdown-content">
+        {% for mode-name in page.modes %}
+          <p class="dropdown-item" tabindex="0">{{ mode-name }}</p>
+        {% endfor %}
+      </div>
+    </div>
+    {% for slider-name in page.slider %}
+    <div class="slider-container">
+      <input type="range" min="1" max="100" value="50" step="any" class="slider" id="slider-{{ slider-name}}">
+      <h4 class="slider-text" id="slider-text-{{ slider-name }}"> 1 </h4>
+      <h4 class="slider-text">{{ slider-name }}</h4>
+    </div>
+    {% endfor %}
+    <h6 class="project-inspiration">Inspired by: <a class="project-inspiration" href={{ page.inspiration }}>link</a></h6>
     </div>
   </div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.dropdown').forEach(function(drop) {
+  // select direct child label; use :scope for child combinator and fall back to any span
+  const label = drop.querySelector(':scope > span') || drop.querySelector('span');
+    const content = drop.querySelector('.dropdown-content');
+    if (!label || !content) return;
+
+    // helpers to open/close via class so CSS :hover and other rules still apply
+    function openDropdown() { drop.classList.add('open'); content.style.display = 'block'; label.setAttribute('aria-expanded', 'true'); }
+    function closeDropdown() { drop.classList.remove('open'); content.style.display = ''; label.setAttribute('aria-expanded', 'false'); }
+
+    // Click handler: update label text with clicked item's text
+    content.addEventListener('click', function(e) {
+      const item = e.target.closest('.dropdown-item');
+      if (!item) return;
+      const value = item.textContent.trim();
+      label.textContent = value;
+      // hide dropdown after selection
+      closeDropdown();
+      // dispatch a custom event so other scripts can listen
+      try { document.dispatchEvent(new CustomEvent('dropdown:change', { detail: { value: value, item: item, dropdown: drop } })); } catch (err) { }
+    });
+
+    // Keyboard support: Enter or Space activates the item
+    content.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        const item = e.target.closest('.dropdown-item');
+        if (!item) return;
+        e.preventDefault();
+        const value = item.textContent.trim();
+        label.textContent = value;
+        // hide dropdown after selection
+        closeDropdown();
+        // dispatch a custom event so other scripts can listen
+        try { document.dispatchEvent(new CustomEvent('dropdown:change', { detail: { value: value, item: item, dropdown: drop } })); } catch (err) { }
+      }
+    });
+
+    // clicking the label toggles the dropdown
+    label.setAttribute('role', 'button');
+    label.setAttribute('tabindex', '0');
+    label.setAttribute('aria-expanded', 'true');
+    label.addEventListener('click', function() {
+      if (drop.classList.contains('open')) closeDropdown(); else openDropdown();
+    });
+    label.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        label.click();
+      }
+    });
+
+    // close dropdown when clicking outside
+    document.addEventListener('click', function(ev) {
+      if (!drop.contains(ev.target)) closeDropdown();
+    });
+  });
+});
+</script>

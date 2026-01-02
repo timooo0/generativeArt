@@ -43,6 +43,81 @@
     border-style: solid;
     border-color: $textColor;
 }
+.dropdown {
+    display: box;
+    width: 20%;
+    margin: 1%;
+    padding: 1%;
+    @include fontStyle();
+    font-size: large;
+    background-color: $textColor;
+    color: white;
+    text-align: center;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  width: 20%;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown {
+  .dropdown-content {
+    p { // the <p> elements you render as items
+      margin: 0;
+      padding: 8px 12px;
+      background: white;
+      color: $textColor;
+      cursor: pointer;
+      transition: background-color .15s ease, color .15s ease;
+      user-select: none;
+
+      &:hover,
+      &:focus {
+        background: $textColor;
+        color: white;
+        outline: none;
+      }
+
+      // optional: active/pressed state
+      &:active {
+        transform: translateY(1px);
+      }
+    }
+  }
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.slider-container{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    margin: 1%;
+
+}
+.slider {
+  width: 50%; /* Full-width */
+  height: 25px; /* Specified height */
+  background: white; /* Grey background */
+  accent-color: $headlineColor;
+  outline: #0c0000; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+  padding: 0%;
+}
+.slider-text {
+    margin: 0px 1% 0px 1% ;
+}
+
 
 .project-inspiration{
     a {
