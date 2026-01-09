@@ -186,13 +186,27 @@ function createDrawing(isSetup=false){
       start_x = canvasX*0.5;
       start_y = canvasY*1;
     break;
+    case "Martijn curve":
+      axiom = "E";
+      rules = {
+        "E":"FF[LER]F[RRFERF]E"
+      };
+      if (isSetup){
+        angle_slider.value = 0.322;
+        iteration_slider.value = 9;
+        line_length_slider.value =15.5;
+      }
+      start_x = canvasX*0.5;
+      start_y = canvasY*0.7;
+    break;
+
 
 
   }
   sentence = generateSentence(rules, axiom, Number(iteration_slider.value));
   sentence = sentence.replaceAll("G","F");
   turtleDraw(sentence, Number(angle_slider.value), Number(line_length_slider.value), start_x ,start_y);
-  // console.log(sentence);
+  console.log(sentence);
 }
 
 

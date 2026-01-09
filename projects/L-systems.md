@@ -2,7 +2,7 @@
 layout: post
 title: 'L-systems'
 slider: {'angle', 'iterations', 'line length'}
-modes: {'fractal tree','Koch curve','Siepinski triangle','Siepinski arrowhead', 'Dragon curve', 'Barnsley fern', 'Mandela', 'Timo curve', 'Lianne curve'}
+modes: {'fractal tree','Koch curve','Siepinski triangle','Siepinski arrowhead', 'Dragon curve', 'Barnsley fern', 'Mandela', 'Timo curve', 'Lianne curve', 'Martijn curve'}
 inspiration: 'https://en.wikipedia.org/wiki/L-system'
 ---
 
