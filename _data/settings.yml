@@ -17,6 +17,7 @@ projects:
 - {name: 'MarchingSquares', url: 'MarchingSquares'}
 - {name: 'Rain',            url: 'Rain'}
 - {name: 'L-systems',       url: 'L-systems'}
+- {name: 'Grid',            url: 'Grid'}
 
 #-------------------------------
 # Contact Section
