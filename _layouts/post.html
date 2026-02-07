@@ -8,7 +8,7 @@ layout: default
     <div class="project-load">{{ content }}</div>
     {% if page.modes %}
     <div class="dropdown">
-      <span id="mode-name">fractal tree</span>
+      <span id="mode-name">{{ page.modes | first }}</span>
       <div class="dropdown-content">
         {% for mode-name in page.modes %}
           <p class="dropdown-item" tabindex="0">{{ mode-name }}</p>

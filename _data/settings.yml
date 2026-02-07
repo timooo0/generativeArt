@@ -18,6 +18,8 @@ projects:
 - {name: 'Rain',            url: 'Rain'}
 - {name: 'L-systems',       url: 'L-systems'}
 - {name: 'Grid',            url: 'Grid'}
+- {name: 'Color',           url: 'Color'}
+- {name: 'AlienWorld',      url: AlienWorld}
 
 #-------------------------------
 # Contact Section
